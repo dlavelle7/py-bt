@@ -1,0 +1,18 @@
+{
+  "type": "sequence",
+  "path": "models.football_manager",
+  "children": [
+    {
+      "type": "leaf",
+      "action": "dribble"
+    },
+    {
+      "type": "leaf",
+      "test": "is_defender_near"
+    },
+    {
+      "type": "leaf",
+      "action": "cross"
+    }
+  ]
+}

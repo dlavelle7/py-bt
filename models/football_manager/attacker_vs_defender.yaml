@@ -1,7 +1,0 @@
-tree root:
-  fallback:
-    - attacker_has_ball
-    - defender_has_ball
-
-tree attacker_has_ball:
-  action: models.football_manager.actions.short_pass
