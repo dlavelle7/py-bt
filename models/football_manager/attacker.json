@@ -1,12 +1,38 @@
 {
-  "type": "selector",
   "path": "models.football_manager.tasks",
+  "type": "selector",
   "children": [
     {
-      "task": "can_cross"
+      "type": "sequence",
+      "children": [
+        {
+          "task": "has_space"
+        },
+        {
+            "task": "close_to_goal"
+        },
+        {
+          "task": "shoot"
+        }
+      ]
     },
     {
-      "task": "cross"
+     "children": [
+        {
+          "type": "sequence",
+          "children": [
+            {
+              "task": "has_space"
+            },
+            {
+                "task": "teammate_available"
+            },
+            {
+              "task": "pass_ball"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

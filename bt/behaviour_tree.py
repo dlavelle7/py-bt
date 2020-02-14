@@ -12,6 +12,7 @@ class BehaviourTree:
         self.tree = None
         self.tasks_path = None
         self.tasks_module = None
+        self.executed_leaf = None
 
     def load(self):
         if self.file_path.endswith(".json"):
@@ -35,14 +36,16 @@ class BehaviourTree:
             self.tree = load(yaml_file.read())
 
     def execute(self, data):
+        print("Executing new flow")
         self._execute(self.tree.get("children", []), data)
 
     def _execute(self, nodes, data):
-        # TODO: handle, selector/sequence flow
         for node in nodes:
             if node.get("children") is not None:
+                # TODO: handle, selector/sequence flow
                 result = self._execute(node.get("children"), data)
             else:
                 task = node.get("task")
-                getattr(self.tasks_module, task)(data)
-                # TODO: handle node success / failure
+                result = getattr(self.tasks_module, task)(data)
+                if result is True:
+                    self.executed_leaf = task  # TODO: could this be returned to execute()???
