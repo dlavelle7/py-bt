@@ -40,17 +40,9 @@ class BehaviourTree:
     def _execute(self, nodes, data):
         # TODO: handle, selector/sequence flow
         for node in nodes:
-            if node["type"] in ("sequence", "selector"):
-                result = self._execute(node, data)
-            elif node["type"] == "leaf":
-                if node.get("action") is not None:
-                    action = node.get("action")
-                    try:
-                        result = getattr(self.tasks_module, action)(data)
-                    except ActionError as exc:
-                        print(f"Exception {exc}.")
-                        # TODO: handle action failure
-                elif node.get("test") is not None:
-                    condition = node.get("test")
-                    test_passed = getattr(self.tasks_module, condition)(data)
-                    # TODO: handle test failure
+            if node.get("children") is not None:
+                result = self._execute(node.get("children"), data)
+            else:
+                task = node.get("task")
+                getattr(self.tasks_module, task)(data)
+                # TODO: handle node success / failure

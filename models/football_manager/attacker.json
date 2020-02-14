@@ -1,18 +1,12 @@
 {
-  "type": "sequence",
+  "type": "selector",
   "path": "models.football_manager.tasks",
   "children": [
     {
-      "type": "leaf",
-      "action": "dribble"
+      "task": "can_cross"
     },
     {
-      "type": "leaf",
-      "test": "is_defender_near"
-    },
-    {
-      "type": "leaf",
-      "action": "cross"
+      "task": "cross"
     }
   ]
 }
