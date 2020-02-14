@@ -1,6 +1,6 @@
 {
   "type": "sequence",
-  "path": "models.football_manager",
+  "path": "models.football_manager.tasks",
   "children": [
     {
       "type": "leaf",

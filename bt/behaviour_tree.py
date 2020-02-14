@@ -22,7 +22,7 @@ class BehaviourTree:
             raise TypeError(
                 f"File type not supported for {os.path.basename(self.file_path)}. "
                 "Please use JSON or YAML formats.")
-        self.tasks_path = self.tree["path"] + ".tasks"
+        self.tasks_path = self.tree["path"]
         self.tasks_module = importlib.import_module(self.tasks_path)
 
 
