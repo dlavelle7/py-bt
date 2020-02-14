@@ -46,6 +46,6 @@ class BehaviourTree:
                 if node.get("action") is not None:
                     action = node.get("action")
                     result = getattr(self.tasks_module, action)(input_data)
-                elif node.get("condition") is not None:
-                    condition = node.get("condition")
+                elif node.get("test") is not None:
+                    condition = node.get("test")
                     result = getattr(self.tasks_module, condition)(input_data)
