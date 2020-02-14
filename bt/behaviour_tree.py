@@ -34,18 +34,23 @@ class BehaviourTree:
         with open(self.file_path, "r") as yaml_file:
             self.tree = load(yaml_file.read())
 
-    def execute(self, input_data):
-        self._execute(self.tree.get("children", []), input_data)
+    def execute(self, data):
+        self._execute(self.tree.get("children", []), data)
 
-    def _execute(self, nodes, input_data):
+    def _execute(self, nodes, data):
         # TODO: handle, selector/sequence flow
         for node in nodes:
             if node["type"] in ("sequence", "selector"):
-                result = self._execute(node, input_data)
+                result = self._execute(node, data)
             elif node["type"] == "leaf":
                 if node.get("action") is not None:
                     action = node.get("action")
-                    result = getattr(self.tasks_module, action)(input_data)
+                    try:
+                        result = getattr(self.tasks_module, action)(data)
+                    except ActionError as exc:
+                        print(f"Exception {exc}.")
+                        # TODO: handle action failure
                 elif node.get("test") is not None:
                     condition = node.get("test")
-                    result = getattr(self.tasks_module, condition)(input_data)
+                    test_passed = getattr(self.tasks_module, condition)(data)
+                    # TODO: handle test failure
