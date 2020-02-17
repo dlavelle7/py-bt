@@ -16,22 +16,57 @@ Selector nodes return the first successful child node. Similar to the OR operato
 
 ## Usage
 
+[TODO: Upload to pypi]
 Install:
 
-```
+```bash
 python setup.py install
 ```
 
-Define your desired tree model in JSON or YAML format (see Example section below for examples).
+Define a python module for you behaviour tasks (actions & tests). Tasks must return True or False
+depending on whether they succeed or fail. Tasks functions receive `data` and `blackboard` args.
+`data` is the input data to the tree execution and `blackboard` is a key value store where
+information can be shared between nodes. For example:
 
-Define a python module for you behaviour tasks (actions & tests) and reference this in your tree model.
+```python
+def choose_food(data, blackboard):
+    if data["lunchbox"]:
+        blackboard["choice"] = random.choice(data["lunchbox"])
+        return True
+    return False
+
+def eat(data, blackboard):
+    print(f"Eating {blackboard['choice']}")
+    return True
+```
+
+Then, define your desired tree model in JSON or YAML format. For example:
+
+```json
+{
+  "type": "sequence",
+  "tasks_path": "path.to.tasks.module",
+  "children": [
+    {
+      "task": "choose_food"
+    },
+    {
+        "task": "eat"
+    }
+  ]
+}
+```
 
 Then initialise and execute a behaviour tree object with some input data:
 
 [TODO: Import path my change when proper setup.py written]
 
-```
+```python
 from bt.behaviour_tree import BehaviourTree
+
+data = {
+    "lunchbox": ["apple", "orange", "pear"]
+}
 
 tree = BehaviourTree("/path/to/tree/model.json")
 tree.load()
@@ -51,9 +86,9 @@ football simulator might behave.
 
 ```
 pip install -r requirements.txt
-pytest tests/
+pytest
+flake8
 ```
 
 [TODO: CI Build]
 [TODO: Docker build]
-[TODO: Upload to pypi]

@@ -23,9 +23,9 @@ def check_have_space(data, _):
 def check_close_to_goal(data, _):
     x, y = data["attacker"]["coordinates"]
     if "shoot" in PITCH[x][y]:
-        print(f"{data['attacker']['name']} is close enough to shoot . . .") 
+        print(f"{data['attacker']['name']} is close enough to shoot . . .")
         return True
-    print(f"{data['attacker']['name']} is not close enough to shoot . . .") 
+    print(f"{data['attacker']['name']} is not close enough to shoot . . .")
     return False
 
 
@@ -64,9 +64,9 @@ def check_in_crossing_position(data, _):
     """Crossing position are the wings in the opponents half"""
     x, y = data["attacker"]["coordinates"]
     if "cross" in PITCH[x][y]:
-        print(f"{data['attacker']['name']} is in crossing position . . .") 
+        print(f"{data['attacker']['name']} is in crossing position . . .")
         return True
-    print(f"{data['attacker']['name']} is not in a crossing position . . .") 
+    print(f"{data['attacker']['name']} is not in a crossing position . . .")
     return False
 
 

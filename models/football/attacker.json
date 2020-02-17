@@ -1,5 +1,5 @@
 {
-  "path": "models.football.tasks",
+  "tasks_path": "models.football.tasks",
   "type": "selector",
   "children": [
     {
