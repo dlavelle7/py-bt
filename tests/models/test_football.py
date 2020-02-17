@@ -9,7 +9,7 @@ JSON_TREE_PATH = os.path.abspath(
         os.path.dirname(__file__),
         os.pardir,
         os.pardir,
-        "models/football_manager/attacker.json"
+        "models/football/attacker.json"
     )
 )
 

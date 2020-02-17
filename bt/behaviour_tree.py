@@ -37,15 +37,15 @@ class BehaviourTree:
 
     def execute(self, data):
         print("Executing new flow")
-        self._execute_node(self.tree.get("children", []), data)
+        self._execute_node(self.tree, data)
 
-    def _execute_node(self, nodes, data):
-        for node in nodes:
-            if node.get("children") is not None:
+    def _execute_node(self, node, data):
+        for child in node.get("children"):
+            if child.get("children") is not None:
                 # TODO: handle, selector/sequence flow
-                result = self._execute(node.get("children"), data)
+                result = self._execute_node(child, data)
             else:
-                task = node.get("task")
+                task = child.get("task")
                 result = getattr(self.tasks_module, task)(data)
                 if result is True:
                     self.executed_leaf = task  # TODO: could this be returned to execute()???
