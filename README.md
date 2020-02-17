@@ -19,13 +19,14 @@ Selector nodes return the first successful child node. Similar to the OR operato
 Install:
 
 ```
-python setup.py install .
+python setup.py install
 ```
 
 Define your desired tree model in JSON or YAML format (see Example section below for examples).
 
 Then initialise and execute a behaviour tree object with some input data:
 
+[TODO: Import path my change when proper setup.py written]
 ```
 from bt.behaviour_tree import BehaviourTree
 
