@@ -24,9 +24,12 @@ python setup.py install
 
 Define your desired tree model in JSON or YAML format (see Example section below for examples).
 
+Define a python module for you behaviour tasks (actions & tests).
+
 Then initialise and execute a behaviour tree object with some input data:
 
 [TODO: Import path my change when proper setup.py written]
+
 ```
 from bt.behaviour_tree import BehaviourTree
 

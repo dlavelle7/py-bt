@@ -7,10 +7,12 @@ from yaml import load
 SEQUENCE = "sequence"
 SELECTOR = "selector"
 
-
 # TODO: Logger
 # TODO: Subtrees
+# TODO: an inverter node would be more readable than "check_not_()" tasks
 # TODO: Some sort of state passing (blackboard?) - e.g. pass to / teammate nearby & teammate marked
+# TODO: Restrict node blackboard access - within family?
+
 
 class BehaviourTree:
 
@@ -20,6 +22,7 @@ class BehaviourTree:
         self.tasks_path = None
         self.tasks_module = None
         self.execution_path = []
+        self.blackboard = {}
 
     def load(self):
         if self.file_path.endswith(".json"):
@@ -31,8 +34,8 @@ class BehaviourTree:
                 f"File type not supported for {os.path.basename(self.file_path)}. "
                 "Please use JSON or YAML formats.")
         self.tasks_path = self.tree["path"]
+        self.blackboard[self.tasks_path] = {}
         self.tasks_module = importlib.import_module(self.tasks_path)
-
 
     def _load_json(self):
         with open(self.file_path, "r") as json_file:
@@ -52,7 +55,7 @@ class BehaviourTree:
                 child_result = self._execute_node(child, data)
             else:
                 task = child.get("task")
-                child_result = getattr(self.tasks_module, task)(data)
+                child_result = getattr(self.tasks_module, task)(data, self.blackboard[self.tasks_path])
                 self.execution_path.append((task, child_result))
 
             if node.get("type") == SEQUENCE:
