@@ -1,31 +1,48 @@
+# 4 x 4 grid
+PITCH = [
+    [("cross",), ("shoot",), ("shoot",), ("cross",)],
+    [("cross",), ("shoot",), ("shoot",), ("cross",)],
+    [(), (), (), ()],
+    [(), (), (), ()],
+]
 
 # Tests
 def check_have_space(data):
-    """Assume a defender is near if the nearest opposition player is less than 1m away."""
-    nearest_opponent = data["opposition"][0]
-    if nearest_opponent["proximity"] < 1:
-        print(f"{nearest_opponent['name']} is closing down {data['attacker']['name']}.")
-        return False
+    """An attacker has space if there is no defender in the same grid square"""
+    for opponent in data["opposition"]:
+        if opponent["coordinates"] == data["attacker"]["coordinates"]:
+            print(f"{opponent['name']} is closing down {data['attacker']['name']}.")
+            return False
     print(f"No defender near {data['attacker']['name']} . . .")
     return True
 
 
 def check_close_to_goal(data):
-    """Attacker is close enough to goal for a shot if they are within 12m"""
-    if data["attacker"]["distance_from_goal"] <= 12:
+    x, y = data["attacker"]["coordinates"]
+    if "shoot" in PITCH[x][y]:
         print(f"{data['attacker']['name']} is close enough to shoot . . .") 
         return True
     print(f"{data['attacker']['name']} is not close enough to shoot . . .") 
     return False
 
 
-def check_teammate_available(data):
-    """An available teammate is withing 5m away."""
+def check_teammate_nearby(data):
+    """A nearby teammate is in the same grid square as the attacker on the ball."""
     for teammate in data["teammates"]:
-        if teammate["proximity"] <= 5:
-            print(f"{teammate['name']} is available . . .")
+        if teammate["coordinates"] == data["attacker"]["coordinates"]:
+            print(f"{teammate['name']} is nearby . . .")
             return True
     print("No pass on")
+    return False
+
+
+def check_in_crossing_position(data):
+    """Crossing position are the wings in the opponents half"""
+    x, y = data["attacker"]["coordinates"]
+    if "cross" in PITCH[x][y]:
+        print(f"{data['attacker']['name']} is in crossing position . . .") 
+        return True
+    print(f"{data['attacker']['name']} is not in a crossing position . . .") 
     return False
 
 

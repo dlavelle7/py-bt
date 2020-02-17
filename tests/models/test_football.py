@@ -24,12 +24,12 @@ class TestFootball(TestCase):
         game_data = {
             "attacker": {
                 "name": "Mane",
-                "distance_from_goal": 9
+                "coordinates": (0, 1)
             },
             "opposition": [
                 {
                     "name": "Jones",
-                    "proximity": 2
+                    "coordinates": (0, 2)
                 }
             ],
             "teammates": []
@@ -48,18 +48,18 @@ class TestFootball(TestCase):
         game_data = {
             "attacker": {
                 "name": "Mane",
-                "distance_from_goal": 20  # too far out to shoot
+                "coordinates": (1, 0)  # too far out to shoot
             },
             "opposition": [
                 {
                     "name": "Jones",
-                    "proximity": 2
+                    "coordinates": (0, 1)
                 }
             ],
             "teammates": [
                 {
-                    "name": "Firmino",
-                    "proximity": 3
+                    "name": "Robertson",
+                    "coordinates": (1, 0)
                 }
             ]
         }
@@ -70,10 +70,28 @@ class TestFootball(TestCase):
                 ("check_have_space", True),
                 ("check_close_to_goal", False),
                 ("check_have_space", True),
-                ("check_teammate_available", True),
+                ("check_teammate_nearby", True),
                 ("pass_ball", True)]
         )
 
     # TODO
-    def test_attacker_cannot_shoot_can_could_cross(self):
-        pass
+    def todo_test_attacker_cannot_shoot_can_could_cross(self):
+        game_data = {
+            "attacker": {
+                "name": "Mane",
+                "coordinates": (2, 0)  # too far out to shoot
+            },
+            "opposition": [
+                {
+                    "name": "Jones",
+                    "coordinates": (0, 2)
+                }
+            ],
+            "teammates": [
+                {
+                    "name": "Firmino",
+                    "coordinates": (2, 0)
+                }
+            ]
+        }
+        self.btree.execute(game_data)

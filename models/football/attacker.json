@@ -25,7 +25,25 @@
               "task": "check_have_space"
             },
             {
-                "task": "check_teammate_available"
+                "task": "check_teammate_nearby"
+            },
+            {
+              "task": "pass_ball"
+            }
+          ]
+        }
+      ]
+    },
+    {
+     "children": [
+        {
+          "type": "sequence",
+          "children": [
+            {
+              "task": "check_have_space"
+            },
+            {
+                "task": "check_in_crossing_position"
             },
             {
               "task": "pass_ball"
