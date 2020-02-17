@@ -4,9 +4,17 @@ deps = [
     "PyYAML==5.3",
 ]
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name="py-bt",
-    version="0.0.1",
+    version="0.0.2",
+    author="David Lavelle",
+    description="Python package for modelling and executing Behaviour Trees.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/dlavelle7/py-bt",
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     package_dir={'': '.'},
     include_package_data=True,

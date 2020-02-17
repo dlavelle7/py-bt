@@ -2,6 +2,8 @@
 
 [WIP]
 
+PyPi: https://pypi.org/project/py-bt/
+
 Tree structure made up of Composite and Leaf nodes.
 
 Leaf nodes are where the behaviour happens, for example an "action" or "test".
@@ -22,12 +24,10 @@ Tested on:
 
 ## Usage
 
-[TODO: Upload to pypi]
-
 Install:
 
 ```bash
-python setup.py install
+pip install py-bt
 ```
 
 Define a python module for you behaviour tasks (actions & tests). Tasks must return True or False
@@ -98,3 +98,11 @@ flake8
 [TODO: CI Build]
 
 [TODO: Docker build]
+
+
+## Upload to PyPi
+
+```bash
+python3 setup.py sdist bdist_wheel
+twine upload dist/*
+```
