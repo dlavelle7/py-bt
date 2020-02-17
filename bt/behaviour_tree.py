@@ -4,6 +4,9 @@ import importlib
 
 from yaml import load
 
+SEQUENCE = "sequence"
+SELECTOR = "selector"
+
 
 class BehaviourTree:
 
@@ -47,5 +50,15 @@ class BehaviourTree:
             else:
                 task = child.get("task")
                 result = getattr(self.tasks_module, task)(data)
+
+            if node.get("type") == SEQUENCE:
+                if result is False:
+                    print(f"Sequence node {node} failed, returning")
+                    return False
+            elif node.get("type") == SELECTOR:
                 if result is True:
-                    self.executed_leaf = task  # TODO: could this be returned to execute()???
+                    print(f"Selector node {node} success, returning")
+                    return True
+
+        # TODO: if you added another node after pass (e.g. cross), it'd currently execute
+        return result

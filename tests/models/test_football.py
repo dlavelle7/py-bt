@@ -14,7 +14,7 @@ JSON_TREE_PATH = os.path.abspath(
 )
 
 
-class TestFootballManager(TestCase):
+class TestFootball(TestCase):
 
     def setUp(self):
         self.btree = BehaviourTree(JSON_TREE_PATH)

@@ -1,13 +1,13 @@
 
-
+# Tests
 def has_space(data):
     """Assume a defender is near if the nearest opposition player is less than 1m away."""
     nearest_opponent = data["opposition"][0]
     if nearest_opponent["proximity"] < 1:
         print(f"{nearest_opponent['name']} is closing down {data['attacker']['name']}.")
-        return True
+        return False
     print(f"No defender near {data['attacker']['name']} . . .")
-    return False
+    return True
 
 
 def close_to_goal(data):
@@ -29,6 +29,7 @@ def teammate_available(data):
     return False
 
 
+# Actions
 def pass_ball(data):
     print(f"{data['attacker']['name']} passes the ball!")
     return True
