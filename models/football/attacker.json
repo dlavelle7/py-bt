@@ -25,7 +25,15 @@
               "task": "check_have_space"
             },
             {
-                "task": "check_teammate_nearby"
+                "type": "sequence",
+                "children": [
+                    {
+                        "task": "check_teammate_nearby"
+                    },
+                    {
+                        "task": "check_teammate_not_marked"
+                    }
+                ]
             },
             {
               "task": "pass_ball"
@@ -51,6 +59,9 @@
           ]
         }
       ]
+    },
+    {
+        "task": "go_backwards"
     }
   ]
 }

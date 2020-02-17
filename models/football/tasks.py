@@ -36,6 +36,14 @@ def check_teammate_nearby(data):
     return False
 
 
+def check_teammate_not_marked(data):
+    """A teammate is considered marked if there is an opponent in the same grid square."""
+    # TODO: need to pass state from blackboard
+    # TODO: an inverter node would be more readable
+    print("Teammate not marked")
+    return True
+
+
 def check_in_crossing_position(data):
     """Crossing position are the wings in the opponents half"""
     x, y = data["attacker"]["coordinates"]
@@ -59,4 +67,9 @@ def shoot(data):
 
 def cross(data):
     print(f"{data['attacker']['name']} crosses the ball!")
+    return True
+
+
+def go_backwards(data):
+    print(f"No attacking options on, {data['attacker']['name']} goes backwards!")
     return True

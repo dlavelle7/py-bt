@@ -9,6 +9,8 @@ SELECTOR = "selector"
 
 
 # TODO: Logger
+# TODO: Subtrees
+# TODO: Some sort of state passing (blackboard?) - e.g. pass to / teammate nearby & teammate marked
 
 class BehaviourTree:
 
