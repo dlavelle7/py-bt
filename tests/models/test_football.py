@@ -74,24 +74,35 @@ class TestFootball(TestCase):
                 ("pass_ball", True)]
         )
 
-    # TODO
-    def todo_test_attacker_cannot_shoot_can_could_cross(self):
+    def test_attacker_cannot_shoot_cannot_pass_but_can_cross(self):
         game_data = {
             "attacker": {
                 "name": "Mane",
-                "coordinates": (2, 0)  # too far out to shoot
+                "coordinates": (0, 0)  # too wide to shoot
             },
             "opposition": [
                 {
                     "name": "Jones",
-                    "coordinates": (0, 2)
+                    "coordinates": (0, 1)
                 }
             ],
             "teammates": [
                 {
                     "name": "Firmino",
-                    "coordinates": (2, 0)
+                    "coordinates": (0, 1)  # too far away to pass
                 }
             ]
         }
         self.btree.execute(game_data)
+        self.assertListEqual(
+            self.btree.execution_path,
+            [
+                ("check_have_space", True),
+                ("check_close_to_goal", False),
+                ("check_have_space", True),
+                ("check_teammate_nearby", False),
+                ("check_have_space", True),
+                ("check_in_crossing_position", True),
+                ("cross", True)
+            ]
+        )

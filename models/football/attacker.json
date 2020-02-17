@@ -46,7 +46,7 @@
                 "task": "check_in_crossing_position"
             },
             {
-              "task": "pass_ball"
+              "task": "cross"
             }
           ]
         }

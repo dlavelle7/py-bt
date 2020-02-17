@@ -58,5 +58,5 @@ def shoot(data):
 
 
 def cross(data):
-    print(f"{data['attacker']['name']} crosses the ball")
+    print(f"{data['attacker']['name']} crosses the ball!")
     return True

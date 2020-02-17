@@ -41,7 +41,7 @@ class BehaviourTree:
             self.tree = load(yaml_file.read())
 
     def execute(self, data):
-        print("Executing new flow")
+        print("\nExecuting new flow")
         self._execute_node(self.tree, data)
 
     def _execute_node(self, node, data):
