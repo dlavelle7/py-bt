@@ -37,9 +37,9 @@ class BehaviourTree:
 
     def execute(self, data):
         print("Executing new flow")
-        self._execute(self.tree.get("children", []), data)
+        self._execute_node(self.tree.get("children", []), data)
 
-    def _execute(self, nodes, data):
+    def _execute_node(self, nodes, data):
         for node in nodes:
             if node.get("children") is not None:
                 # TODO: handle, selector/sequence flow
