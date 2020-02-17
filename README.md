@@ -1,5 +1,7 @@
 # Behaviour Tree
 
+[WIP]
+
 Tree structure made up of Composite and Leaf nodes.
 
 Leaf nodes are where the behaviour happens, for example an "action" or "test".
@@ -12,7 +14,38 @@ Sequence nodes return the first failed child node. Similar to the ALL operator.
 
 Selector nodes return the first successful child node. Similar to the OR operator.
 
-[TODO] Football Manager Sim: Attacker behaviour
-* Dribble forward
-* Defender in vicinity?
-* Cross ball
+## Usage
+
+Install:
+
+```
+python setup.py install .
+```
+
+Define your desired tree model in JSON or YAML format (see Example section below for examples).
+
+Then initialise and execute a behaviour tree object with some input data:
+
+```
+from bt.behaviour_tree import BehaviourTree
+
+tree = BehaviourTree("/path/to/tree/model.json")
+tree.load()
+
+tree.execute(data)
+```
+
+## Example Models
+
+Some example models can be found under the `/models` directory.
+
+For example `/models/football/attacker.json` contains a behaviour tree for how a attacking player in a
+football simulator might behave.
+
+
+## Tests
+
+```
+pip install -r requirements.txt
+pytest tests/
+```

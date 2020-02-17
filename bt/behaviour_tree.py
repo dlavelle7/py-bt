@@ -55,11 +55,11 @@ class BehaviourTree:
 
             if node.get("type") == SEQUENCE:
                 if child_result is False:
-                    print(f"Sequence node {node} failed, returning")
+                    print(f"Sequence node child failed, returning")
                     return False
             elif node.get("type") == SELECTOR:
                 if child_result is True:
-                    print(f"Selector node {node} success, returning")
+                    print(f"Selector node child success, returning")
                     return True
 
         # TODO: if you added another node after pass (e.g. cross), it'd currently execute
