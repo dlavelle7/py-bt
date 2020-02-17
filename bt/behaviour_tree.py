@@ -15,7 +15,7 @@ class BehaviourTree:
         self.tree = None
         self.tasks_path = None
         self.tasks_module = None
-        self.executed_leaf = None
+        self.execution_path = []
 
     def load(self):
         if self.file_path.endswith(".json"):
@@ -45,20 +45,20 @@ class BehaviourTree:
     def _execute_node(self, node, data):
         for child in node.get("children"):
             if child.get("children") is not None:
-                # TODO: handle, selector/sequence flow
-                result = self._execute_node(child, data)
+                child_result = self._execute_node(child, data)
             else:
                 task = child.get("task")
-                result = getattr(self.tasks_module, task)(data)
+                child_result = getattr(self.tasks_module, task)(data)
+                self.execution_path.append((task, child_result))
 
             if node.get("type") == SEQUENCE:
-                if result is False:
+                if child_result is False:
                     print(f"Sequence node {node} failed, returning")
                     return False
             elif node.get("type") == SELECTOR:
-                if result is True:
+                if child_result is True:
                     print(f"Selector node {node} success, returning")
                     return True
 
         # TODO: if you added another node after pass (e.g. cross), it'd currently execute
-        return result
+        return child_result

@@ -35,7 +35,14 @@ class TestFootball(TestCase):
             "teammates": []
         }
         self.btree.execute(game_data)
-        self.assertEqual(self.btree.executed_leaf, "shoot")
+        self.assertListEqual(
+            self.btree.execution_path,
+            [
+                ("has_space", True),
+                ("close_to_goal", True),
+                ("shoot", True)
+            ]
+        )
 
     def test_attacker_cannot_shoot_but_can_pass(self):
         game_data = {
@@ -57,4 +64,16 @@ class TestFootball(TestCase):
             ]
         }
         self.btree.execute(game_data)
-        self.assertEqual(self.btree.executed_leaf, "pass_ball")
+        self.assertListEqual(
+            self.btree.execution_path,
+            [
+                ("has_space", True),
+                ("close_to_goal", False),
+                ("has_space", True),
+                ("teammate_available", True),
+                ("pass_ball", True)]
+        )
+
+    # TODO
+    def test_attacker_cannot_shoot_can_could_cross(self):
+        pass
