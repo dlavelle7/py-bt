@@ -14,6 +14,12 @@ Sequence nodes return the first failed child node. Similar to the ALL operator.
 
 Selector nodes return the first successful child node. Similar to the OR operator.
 
+## Dependencies
+
+Tested on:
+* Python 3.8.1
+* Python 3.7.5
+
 ## Usage
 
 [TODO: Upload to pypi]
@@ -59,9 +65,6 @@ Then, define your desired tree model in JSON or YAML format. For example:
 ```
 
 Then initialise and execute a behaviour tree object with some input data:
-
-[TODO: Import path my change when proper setup.py written]
-
 
 ```python
 from bt.behaviour_tree import BehaviourTree

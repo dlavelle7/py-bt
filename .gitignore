@@ -3,5 +3,5 @@
 __pycache__/
 build/
 dist/
-bt.egg-info/
+py_bt.egg-info/
 .idea/
