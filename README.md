@@ -24,7 +24,7 @@ python setup.py install
 
 Define your desired tree model in JSON or YAML format (see Example section below for examples).
 
-Define a python module for you behaviour tasks (actions & tests).
+Define a python module for you behaviour tasks (actions & tests) and reference this in your tree model.
 
 Then initialise and execute a behaviour tree object with some input data:
 
@@ -53,3 +53,7 @@ football simulator might behave.
 pip install -r requirements.txt
 pytest tests/
 ```
+
+[TODO: CI Build]
+[TODO: Docker build]
+[TODO: Upload to pypi]

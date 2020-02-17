@@ -10,7 +10,6 @@ SELECTOR = "selector"
 # TODO: Logger
 # TODO: Subtrees
 # TODO: an inverter node would be more readable than "check_not_()" tasks
-# TODO: Some sort of state passing (blackboard?) - e.g. pass to / teammate nearby & teammate marked
 # TODO: Restrict node blackboard access - within family?
 
 
