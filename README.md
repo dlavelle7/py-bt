@@ -17,6 +17,7 @@ Selector nodes return the first successful child node. Similar to the OR operato
 ## Usage
 
 [TODO: Upload to pypi]
+
 Install:
 
 ```bash
@@ -51,7 +52,7 @@ Then, define your desired tree model in JSON or YAML format. For example:
       "task": "choose_food"
     },
     {
-        "task": "eat"
+      "task": "eat"
     }
   ]
 }
@@ -60,6 +61,7 @@ Then, define your desired tree model in JSON or YAML format. For example:
 Then initialise and execute a behaviour tree object with some input data:
 
 [TODO: Import path my change when proper setup.py written]
+
 
 ```python
 from bt.behaviour_tree import BehaviourTree
@@ -91,4 +93,5 @@ flake8
 ```
 
 [TODO: CI Build]
+
 [TODO: Docker build]
