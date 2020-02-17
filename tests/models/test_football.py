@@ -38,8 +38,8 @@ class TestFootball(TestCase):
         self.assertListEqual(
             self.btree.execution_path,
             [
-                ("has_space", True),
-                ("close_to_goal", True),
+                ("check_have_space", True),
+                ("check_close_to_goal", True),
                 ("shoot", True)
             ]
         )
@@ -67,10 +67,10 @@ class TestFootball(TestCase):
         self.assertListEqual(
             self.btree.execution_path,
             [
-                ("has_space", True),
-                ("close_to_goal", False),
-                ("has_space", True),
-                ("teammate_available", True),
+                ("check_have_space", True),
+                ("check_close_to_goal", False),
+                ("check_have_space", True),
+                ("check_teammate_available", True),
                 ("pass_ball", True)]
         )
 

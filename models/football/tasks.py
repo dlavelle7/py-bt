@@ -1,6 +1,6 @@
 
 # Tests
-def has_space(data):
+def check_have_space(data):
     """Assume a defender is near if the nearest opposition player is less than 1m away."""
     nearest_opponent = data["opposition"][0]
     if nearest_opponent["proximity"] < 1:
@@ -10,7 +10,7 @@ def has_space(data):
     return True
 
 
-def close_to_goal(data):
+def check_close_to_goal(data):
     """Attacker is close enough to goal for a shot if they are within 12m"""
     if data["attacker"]["distance_from_goal"] <= 12:
         print(f"{data['attacker']['name']} is close enough to shoot . . .") 
@@ -19,7 +19,7 @@ def close_to_goal(data):
     return False
 
 
-def teammate_available(data):
+def check_teammate_available(data):
     """An available teammate is withing 5m away."""
     for teammate in data["teammates"]:
         if teammate["proximity"] <= 5:

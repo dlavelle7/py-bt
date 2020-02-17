@@ -8,6 +8,8 @@ SEQUENCE = "sequence"
 SELECTOR = "selector"
 
 
+# TODO: Logger
+
 class BehaviourTree:
 
     def __init__(self, file_path):
