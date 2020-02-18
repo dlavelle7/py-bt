@@ -89,16 +89,19 @@ football simulator might behave.
 
 ## Tests
 
+Run tests in local Python environment (use a virtualenv):
 ```
 pip install -r requirements.txt
 pytest
 flake8
 ```
 
-[TODO: CI Build]
-
-[TODO: Docker build]
-
+Run tests in Docker container:
+```
+docker build -t pybt .
+docker run pybt pytest
+docker run pybt flake8
+```
 
 ## Upload to PyPi
 
