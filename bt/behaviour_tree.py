@@ -4,10 +4,11 @@ import importlib
 
 from yaml import load
 
+from bt.logger import logger
+
 SEQUENCE = "sequence"
 SELECTOR = "selector"
 
-# TODO: Logger
 # TODO: Subtrees
 # TODO: an inverter node would be more readable than "check_not_()" tasks
 # TODO: Restrict node blackboard access - within family?
@@ -45,7 +46,7 @@ class BehaviourTree:
             self.tree = load(yaml_file.read())
 
     def execute(self, data):
-        print("\nExecuting new flow")
+        logger.info("\nExecuting new flow")
         self._execute_node(self.tree, data)
 
     def _execute_node(self, node, data):
@@ -59,11 +60,11 @@ class BehaviourTree:
 
             if node.get("type") == SEQUENCE:
                 if child_result is False:
-                    print(f"Sequence node child failed, returning")
+                    logger.info(f"Sequence node child failed, returning")
                     return False
             elif node.get("type") == SELECTOR:
                 if child_result is True:
-                    print(f"Selector node child success, returning")
+                    logger.info(f"Selector node child success, returning")
                     return True
 
         return child_result
