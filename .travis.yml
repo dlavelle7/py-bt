@@ -1,0 +1,13 @@
+language: python
+python:
+  - "3.8"
+
+services:
+  - docker
+
+install:
+  - docker build -t pybt .
+
+script:
+  - docker run pybt pytest
+  - docker run pybt flake8

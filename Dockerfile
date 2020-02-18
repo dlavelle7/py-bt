@@ -5,7 +5,7 @@ RUN mkdir /code
 WORKDIR /code
 
 # Copy source code to install python package
-COPY setup.py /code/
+COPY setup.py README.md /code/
 COPY bt/ /code/bt/
 
 # Install the python package
