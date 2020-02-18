@@ -96,11 +96,10 @@ pytest
 flake8
 ```
 
-Run tests in Docker container:
+Run tests with tox:
 ```
-docker build -t pybt .
-docker run pybt pytest
-docker run pybt flake8
+pip install tox==3.14.5
+tox
 ```
 
 ## Upload to PyPi
