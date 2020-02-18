@@ -34,7 +34,6 @@ class BehaviourTree:
                 f"File type not supported for {os.path.basename(self.file_path)}. "
                 "Please use JSON or YAML formats.")
         self.tasks_path = self.tree["tasks_path"]
-        self.blackboard[self.tasks_path] = {}
         self.tasks_module = importlib.import_module(self.tasks_path)
 
     def _load_json(self):
@@ -46,6 +45,7 @@ class BehaviourTree:
             self.tree = load(yaml_file.read())
 
     def execute(self, data):
+        self.blackboard = {}
         logger.info("\nExecuting new flow")
         self._execute_node(self.tree, data)
 
@@ -55,7 +55,7 @@ class BehaviourTree:
                 child_result = self._execute_node(child, data)
             else:
                 task = child.get("task")
-                child_result = getattr(self.tasks_module, task)(data, self.blackboard[self.tasks_path])
+                child_result = getattr(self.tasks_module, task)(data, self.blackboard)
                 self.execution_path.append((task, child_result))
 
             if node.get("type") == SEQUENCE:

@@ -91,7 +91,7 @@ football simulator might behave.
 
 Run tests in local Python environment (use a virtualenv):
 ```
-pip install -r requirements.txt
+pip install -r requirements.txt -r requirements-test.txt
 pytest
 flake8
 ```
@@ -104,7 +104,7 @@ tox
 
 ## Upload to PyPi
 
-```bash
+```
 python3 setup.py sdist bdist_wheel
 twine upload dist/*
 ```
