@@ -1,7 +1,9 @@
 *.pyc
 *.swp
+.coverage
 __pycache__/
 build/
 dist/
 py_bt.egg-info/
 .idea/
+.tox/
