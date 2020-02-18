@@ -66,5 +66,4 @@ class BehaviourTree:
                     print(f"Selector node child success, returning")
                     return True
 
-        # TODO: if you added another node after pass (e.g. cross), it'd currently execute
         return child_result
