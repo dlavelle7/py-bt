@@ -10,7 +10,7 @@ SEQUENCE = "sequence"
 SELECTOR = "selector"
 
 # TODO: Subtrees
-# TODO: an inverter node would be more readable than "check_not_()" tasks
+# TODO: Decorators: Retry, Inverter would be more readable than "check_not_()" tasks
 # TODO: Restrict node blackboard access - within family?
 
 
