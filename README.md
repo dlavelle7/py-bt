@@ -1,4 +1,4 @@
-# Behaviour Tree
+# Behaviour Tree [![Build Status](https://travis-ci.com/dlavelle7/py-bt.svg?branch=master)](https://travis-ci.com/dlavelle7/py-bt)
 
 [WIP]
 
