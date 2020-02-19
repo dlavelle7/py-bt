@@ -51,16 +51,17 @@ Then, define your desired tree model in JSON or YAML format. For example:
 
 ```json
 {
-  "type": "sequence",
   "tasks_path": "path.to.tasks.module",
-  "children": [
-    {
-      "task": "choose_food"
-    },
-    {
-      "task": "eat"
-    }
-  ]
+  "tree": {
+    "sequence": [
+      {
+        "task": "choose_food"
+      },
+      {
+        "task": "eat"
+      }
+    ]
+  }
 }
 ```
 

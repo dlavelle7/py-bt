@@ -6,9 +6,12 @@ from yaml import load
 
 from bt.logger import logger
 
+TREE = "tree"
 SEQUENCE = "sequence"
 SELECTOR = "selector"
+TASK = "task"
 
+# TODO: Validate tree in load() -> Composites can only be sel/seq, Leafs can only be task
 # TODO: Subtrees
 # TODO: Decorators: Retry, Inverter would be more readable than "check_not_()" tasks
 # TODO: Restrict node blackboard access - within family?
@@ -18,7 +21,7 @@ class BehaviourTree:
 
     def __init__(self, file_path):
         self.file_path = file_path
-        self.tree = None
+        self.model = None
         self.tasks_path = None
         self.tasks_module = None
         self.execution_path = []
@@ -33,36 +36,43 @@ class BehaviourTree:
             raise TypeError(
                 f"File type not supported for {os.path.basename(self.file_path)}. "
                 "Please use JSON or YAML formats.")
-        self.tasks_path = self.tree["tasks_path"]
+        self.tasks_path = self.model["tasks_path"]
         self.tasks_module = importlib.import_module(self.tasks_path)
 
     def _load_json(self):
         with open(self.file_path, "r") as json_file:
-            self.tree = json.loads(json_file.read())
+            self.model = json.loads(json_file.read())
 
     def _load_yaml(self):
         with open(self.file_path, "r") as yaml_file:
-            self.tree = load(yaml_file.read())
+            self.model = load(yaml_file.read())
 
     def execute(self, data):
         self.blackboard = {}
         logger.info("\nExecuting new flow")
-        self._execute_node(self.tree, data)
+        self._execute_node(self.model[TREE], data)
 
     def _execute_node(self, node, data):
-        for child in node.get("children"):
-            if child.get("children") is not None:
-                child_result = self._execute_node(child, data)
-            else:
-                task = child.get("task")
-                child_result = getattr(self.tasks_module, task)(data, self.blackboard)
-                self.execution_path.append((task, child_result))
+        if node.get(SEQUENCE) is not None:
+            node_type = SEQUENCE
+            children = node[SEQUENCE]
+        elif node.get(SELECTOR) is not None:
+            node_type = SELECTOR
+            children = node[SELECTOR]
+        else:
+            task = node[TASK]
+            child_result = getattr(self.tasks_module, task)(data, self.blackboard)
+            self.execution_path.append((task, child_result))
+            return child_result
 
-            if node.get("type") == SEQUENCE:
+        for child in children:
+            child_result = self._execute_node(child, data)
+
+            if node_type == SEQUENCE:
                 if child_result is False:
                     logger.info(f"Sequence node child failed, returning")
                     return False
-            elif node.get("type") == SELECTOR:
+            elif node_type == SELECTOR:
                 if child_result is True:
                     logger.info(f"Selector node child success, returning")
                     return True
