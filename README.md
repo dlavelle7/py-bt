@@ -1,7 +1,5 @@
 # Behaviour Tree [![Build Status](https://travis-ci.com/dlavelle7/py-bt.svg?branch=master)](https://travis-ci.com/dlavelle7/py-bt)
 
-[WIP]
-
 PyPi: https://pypi.org/project/py-bt/
 
 Tree structure made up of Composite and Leaf nodes.
