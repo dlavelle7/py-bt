@@ -107,3 +107,36 @@ class TestFootball(TestCase):
                 ("cross", True)
             ]
         )
+
+    def test_attacker_can_only_go_backwards(self):
+        game_data = {
+            "attacker": {
+                "name": "Mane",
+                "coordinates": (2, 2)  # too far out to shoot, cross
+            },
+            "opposition": [
+                {
+                    "name": "Jones",
+                    "coordinates": (1, 1)
+                }
+            ],
+            "teammates": [
+                {
+                    "name": "Firmino",
+                    "coordinates": (0, 1)  # too far away to pass
+                }
+            ]
+        }
+        self.btree.execute(game_data)
+        self.assertListEqual(
+            self.btree.execution_path,
+            [
+                ("check_have_space", True),
+                ("check_close_to_goal", False),
+                ("check_have_space", True),
+                ("check_teammate_nearby", False),
+                ("check_have_space", True),
+                ("check_in_crossing_position", False),
+                ("go_backwards", True)
+            ]
+        )

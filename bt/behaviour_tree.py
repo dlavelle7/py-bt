@@ -11,8 +11,8 @@ SEQUENCE = "sequence"
 SELECTOR = "selector"
 TASK = "task"
 
-# TODO: Validate tree in load() -> Composites can only be sel/seq, Leafs can only be task
 # TODO: Subtrees
+# TODO: Validate tree in load() -> Use JSON Schema/Marshmallow -> Composites can only be sel/seq, Leafs can only be task
 # TODO: Decorators: Retry, Inverter would be more readable than "check_not_()" tasks
 # TODO: Restrict node blackboard access - within family?
 
