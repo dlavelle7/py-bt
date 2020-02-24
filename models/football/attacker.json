@@ -26,7 +26,9 @@
                 "task": "check_teammate_nearby"
               },
               {
-                "task": "check_teammate_not_marked"
+                "not": {
+                  "task": "check_nearby_teammates_marked"
+                }
               }
             ]
           },

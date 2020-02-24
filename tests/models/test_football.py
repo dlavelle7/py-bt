@@ -71,7 +71,7 @@ class TestFootball(TestCase):
                 ("check_close_to_goal", False),
                 ("check_have_space", True),
                 ("check_teammate_nearby", True),
-                ("check_teammate_not_marked", True),
+                ("check_nearby_teammates_marked", False),
                 ("pass_ball", True)]
         )
 
