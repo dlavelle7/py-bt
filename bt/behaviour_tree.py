@@ -73,6 +73,7 @@ class BehaviourTree:
         for child in children:
             child_result = self._execute_node(child, data)
             if parent_node_type == DECORATOR_NOT:
+                self.execution_path[-1] = (DECORATOR_NOT.upper(), self.execution_path[-1], not child_result)
                 child_result = not child_result
 
             if parent_node_type == SEQUENCE:
