@@ -14,7 +14,7 @@ DECORATOR_NOT = "not"
 
 # TODO: Subtrees
 # TODO: Validate tree in load() -> Use JSON Schema/Marshmallow -> Composites can only be sel/seq, Leafs can only be task
-# TODO: Decorators: Retry, Inverter would be more readable than "check_not_()" tasks
+# TODO: Decorators: Retry
 # TODO: Restrict node blackboard access - within family?
 
 
@@ -66,6 +66,7 @@ class BehaviourTree:
         else:
             task = node[TASK]
             child_result = getattr(self.tasks_module, task)(data, self.blackboard)
+            # TODO: Need to update path for NOT decorator: ("NOT", ("check_nearby_teammates_marked", False), True)
             self.execution_path.append((task, child_result))
             return child_result
 
