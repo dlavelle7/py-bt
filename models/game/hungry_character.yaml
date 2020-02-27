@@ -3,3 +3,7 @@ tree:
   selector:
     - task: am_i_hungry
     - task: have_i_food
+    - retry:
+      - not:
+        :task: enemies_nearby
+    - task: eat
