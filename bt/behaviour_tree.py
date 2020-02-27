@@ -11,6 +11,9 @@ SEQUENCE = "sequence"
 SELECTOR = "selector"
 TASK = "task"
 DECORATOR_NOT = "not"
+DECORATOR_RETRY = "retry"
+RETRY_COUNT = "count"
+DEFAULT_RETRY_COUNT = 1
 
 # TODO: Subtrees
 # TODO: Validate tree in load() -> Use JSON Schema/Marshmallow -> Composites can only be sel/seq, Leafs can only be task
@@ -48,21 +51,25 @@ class BehaviourTree:
             self.model = load(yaml_file.read())
 
     def execute(self, data):
+        self.execution_path = []
         self.blackboard = {}
         logger.info("\nExecuting new flow")
         self._execute_node(self.model[TREE], data)
 
+    # TODO: Refactor - This method is getting a bit big now
     def _execute_node(self, node, data):
         if node.get(SEQUENCE) is not None:
-            parent_node_type = SEQUENCE
+            node_type = SEQUENCE
             children = node[SEQUENCE]
         elif node.get(SELECTOR) is not None:
-            parent_node_type = SELECTOR
+            node_type = SELECTOR
             children = node[SELECTOR]
         elif node.get(DECORATOR_NOT) is not None:
-            parent_node_type = DECORATOR_NOT
+            node_type = DECORATOR_NOT
             children = [node[DECORATOR_NOT]]
-        # TODO: Decorators: Retry
+        elif node.get(DECORATOR_RETRY) is not None:
+            node_type = DECORATOR_RETRY
+            children = [node[DECORATOR_RETRY]]
         else:
             task = node[TASK]
             child_result = getattr(self.tasks_module, task)(data, self.blackboard)
@@ -70,16 +77,25 @@ class BehaviourTree:
             return child_result
 
         for child in children:
-            child_result = self._execute_node(child, data)
-            if parent_node_type == DECORATOR_NOT:
+            if node_type == DECORATOR_RETRY:
+                retry_count = node[DECORATOR_RETRY].get(RETRY_COUNT, DEFAULT_RETRY_COUNT) > 0
+                while retry_count > 0:
+                    child_result = self._execute_node(child, data)
+                    if child_result is True:
+                        break
+                    retry_count -= 1
+                    logger.info(f"Retrying decorator node: {retry_count} reties left.")
+            else:
+                child_result = self._execute_node(child, data)
+
+            if node_type == DECORATOR_NOT:
                 self.execution_path[-1] = (DECORATOR_NOT.upper(), self.execution_path[-1], not child_result)
                 child_result = not child_result
-
-            if parent_node_type == SEQUENCE:
+            elif node_type == SEQUENCE:
                 if child_result is False:
                     logger.info(f"Sequence node child failed, returning")
                     return False
-            elif parent_node_type == SELECTOR:
+            elif node_type == SELECTOR:
                 if child_result is True:
                     logger.info(f"Selector node child success, returning")
                     return True
