@@ -2,17 +2,23 @@
 
 PyPi: https://pypi.org/project/py-bt/
 
-Tree structure made up of Composite and Leaf nodes.
+Tree structure made up of Composite, Decorator and Leaf nodes.
 
 Leaf nodes are where the behaviour happens, for example an "action" or "test".
 
-Composite nodes can be of 2 types:
+Decorator nodes can only have one child and are used to wrap the result of this child node (e.g. "retry" or "not").
+
+Composite nodes can have multiple children. Composite nodes can be of 2 types:
 * Sequence
 * Selector
 
 Sequence nodes return the first failed child node. Similar to the ALL operator.
 
 Selector nodes return the first successful child node. Similar to the OR operator.
+
+## Release History
+
+* 1.1.0: Added the "not" decorator node (inverter)
 
 ## Dependencies
 

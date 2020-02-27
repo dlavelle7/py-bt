@@ -44,7 +44,7 @@ def check_teammate_nearby(data, blackboard):
     return False
 
 
-def check_teammate_not_marked(data, blackboard):
+def check_nearby_teammates_marked(data, blackboard):
     """A teammate is considered marked if there is an opponent in the same grid square."""
     available_teammates = []
     for teammate in blackboard[check_teammate_nearby.__name__]:
@@ -53,11 +53,11 @@ def check_teammate_not_marked(data, blackboard):
                 available_teammates.append(teammate["name"])
 
     if available_teammates:
-        blackboard[check_teammate_not_marked.__name__] = available_teammates
-        print("Teammate not marked")
-        return True
-    print("All teammates are currently marked . . .")
-    return False
+        blackboard[check_nearby_teammates_marked.__name__] = available_teammates
+        print("Nearby teammates are available . . .")
+        return False
+    print("All nearby teammates are currently marked . . .")
+    return True
 
 
 def check_in_crossing_position(data, _):
@@ -72,7 +72,7 @@ def check_in_crossing_position(data, _):
 
 # Actions
 def pass_ball(data, blackboard):
-    receiver = random.choice(blackboard[check_teammate_not_marked.__name__])
+    receiver = random.choice(blackboard[check_nearby_teammates_marked.__name__])
     print(f"{data['attacker']['name']} passes the ball to {receiver}!")
     return True
 

@@ -10,10 +10,10 @@ TREE = "tree"
 SEQUENCE = "sequence"
 SELECTOR = "selector"
 TASK = "task"
+DECORATOR_NOT = "not"
 
 # TODO: Subtrees
 # TODO: Validate tree in load() -> Use JSON Schema/Marshmallow -> Composites can only be sel/seq, Leafs can only be task
-# TODO: Decorators: Retry, Inverter would be more readable than "check_not_()" tasks
 # TODO: Restrict node blackboard access - within family?
 
 
@@ -54,11 +54,15 @@ class BehaviourTree:
 
     def _execute_node(self, node, data):
         if node.get(SEQUENCE) is not None:
-            node_type = SEQUENCE
+            parent_node_type = SEQUENCE
             children = node[SEQUENCE]
         elif node.get(SELECTOR) is not None:
-            node_type = SELECTOR
+            parent_node_type = SELECTOR
             children = node[SELECTOR]
+        elif node.get(DECORATOR_NOT) is not None:
+            parent_node_type = DECORATOR_NOT
+            children = [node[DECORATOR_NOT]]
+        # TODO: Decorators: Retry
         else:
             task = node[TASK]
             child_result = getattr(self.tasks_module, task)(data, self.blackboard)
@@ -67,12 +71,15 @@ class BehaviourTree:
 
         for child in children:
             child_result = self._execute_node(child, data)
+            if parent_node_type == DECORATOR_NOT:
+                self.execution_path[-1] = (DECORATOR_NOT.upper(), self.execution_path[-1], not child_result)
+                child_result = not child_result
 
-            if node_type == SEQUENCE:
+            if parent_node_type == SEQUENCE:
                 if child_result is False:
                     logger.info(f"Sequence node child failed, returning")
                     return False
-            elif node_type == SELECTOR:
+            elif parent_node_type == SELECTOR:
                 if child_result is True:
                     logger.info(f"Selector node child success, returning")
                     return True
