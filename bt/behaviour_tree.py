@@ -56,25 +56,24 @@ class BehaviourTree:
         logger.info("\nExecuting new flow")
         self._execute_node(self.model[TREE], data)
 
-    # TODO: Refactor - This method is getting a bit big now
-    def _execute_node(self, node, data):
+    def _get_composite_node_type_and_children(self, node):
         if node.get(SEQUENCE) is not None:
-            node_type = SEQUENCE
-            children = node[SEQUENCE]
+            return SEQUENCE, node[SEQUENCE]
         elif node.get(SELECTOR) is not None:
-            node_type = SELECTOR
-            children = node[SELECTOR]
+            return SELECTOR, node[SELECTOR]
         elif node.get(DECORATOR_NOT) is not None:
-            node_type = DECORATOR_NOT
-            children = [node[DECORATOR_NOT]]
+            return DECORATOR_NOT, [node[DECORATOR_NOT]]
         elif node.get(DECORATOR_RETRY) is not None:
-            node_type = DECORATOR_RETRY
-            children = [node[DECORATOR_RETRY]]
-        else:
+            return DECORATOR_RETRY, [node[DECORATOR_RETRY]]
+
+    def _execute_node(self, node, data):
+        if node.get(TASK) is not None:
             task = node[TASK]
             child_result = getattr(self.tasks_module, task)(data, self.blackboard)
             self.execution_path.append((task, child_result))
             return child_result
+        else:
+            node_type, children = self._get_composite_node_type_and_children(node)
 
         for child in children:
             if node_type == DECORATOR_RETRY:
