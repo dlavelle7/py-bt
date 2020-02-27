@@ -33,7 +33,7 @@ class BehaviourTree:
     def load(self):
         if self.file_path.endswith(".json"):
             self._load_json()
-        elif self.file_path.endswith(".yaml"):
+        elif self.file_path.endswith(".yaml") or self.file_path.endswith(".yml"):
             self._load_yaml()
         else:
             raise TypeError(

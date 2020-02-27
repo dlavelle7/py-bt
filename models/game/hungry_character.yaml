@@ -1,0 +1,5 @@
+tasks_path: models.game.tasks
+tree:
+  selector:
+    - task: am_i_hungry
+    - task: have_i_food
