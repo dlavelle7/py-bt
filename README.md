@@ -16,6 +16,10 @@ Sequence nodes return the first failed child node. Similar to the ALL operator.
 
 Selector nodes return the first successful child node. Similar to the OR operator.
 
+## Release History
+
+* 1.1.0: Added the "not" decorator node (inverter)
+
 ## Dependencies
 
 Tested on:
