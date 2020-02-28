@@ -53,8 +53,6 @@ class TestGame(TestCase):
                 ("NOT", ("enemies_nearby", True), False),
                 ("NOT", ("enemies_nearby", True), False),
                 ("NOT", ("enemies_nearby", False), True),
-                #("RETRY", ("NOT", ("enemies_nearby", True), False), False),
-                #("RETRY", ("NOT", ("enemies_nearby", False), True), True),
                 ("eat", True)
             ]
         )
