@@ -6,4 +6,5 @@ tree:
   - retry:
       not:
           task: enemies_nearby
+      count: 5
   - task: eat

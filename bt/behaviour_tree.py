@@ -75,20 +75,15 @@ class BehaviourTree:
         else:
             node_type, children = self._get_composite_node_type_and_children(node)
 
-        import ipdb; ipdb.set_trace();  # XXX Breakpoint
         for child in children:
+            child_result = self._execute_node(child, data)
             if node_type == DECORATOR_RETRY:
-                retry_count = node[DECORATOR_RETRY].get(RETRY_COUNT, DEFAULT_RETRY_COUNT) > 0
-                while retry_count > 0:
-                    child_result = self._execute_node(child, data)
-                    if child_result is True:
-                        break
+                retry_count = node[DECORATOR_RETRY].get(RETRY_COUNT, DEFAULT_RETRY_COUNT)
+                while retry_count > 0 and child_result is False:
                     retry_count -= 1
+                    child_result = self._execute_node(child, data)
                     logger.info(f"Retrying decorator node: {retry_count} reties left.")
-            else:
-                child_result = self._execute_node(child, data)
-
-            if node_type == DECORATOR_NOT:
+            elif node_type == DECORATOR_NOT:
                 self.execution_path[-1] = (DECORATOR_NOT.upper(), self.execution_path[-1], not child_result)
                 child_result = not child_result
             elif node_type == SEQUENCE:

@@ -15,7 +15,7 @@ YAML_MODEL_PATH = os.path.abspath(
 )
 
 
-class TestFootball(TestCase):
+class TestGame(TestCase):
 
     def setUp(self):
         self.btree = BehaviourTree(YAML_MODEL_PATH)
@@ -37,8 +37,8 @@ class TestFootball(TestCase):
             ]
         )
 
-    @patch("models.game.tasks.DB.query", side_effect=[["Bowser", "Revolver Ocelot"], ["Ricardo Diaz", "Marlene"]])
-    def test_can_eat_after_2_retries(self, mock_db_query):
+    @patch("models.game.tasks.DB.query", side_effect=[["Bowser", "Revolver Ocelot"], ["Marlene"], []])
+    def test_can_eat_on_third_retry(self, mock_db_query):
         """Mock the db call to check for enemies around to pass on the 3rd attempt."""
         character_data = {
             "coordinates": (2, 2),
@@ -51,8 +51,10 @@ class TestFootball(TestCase):
                 ("am_i_hungry", True),
                 ("have_i_food", True),
                 ("NOT", ("enemies_nearby", True), False),
-                ("RETRY", ("NOT", ("enemies_nearby", True), False), False),
-                ("RETRY", ("NOT", ("enemies_nearby", False), True), True),
+                ("NOT", ("enemies_nearby", True), False),
+                ("NOT", ("enemies_nearby", False), True),
+                #("RETRY", ("NOT", ("enemies_nearby", True), False), False),
+                #("RETRY", ("NOT", ("enemies_nearby", False), True), True),
                 ("eat", True)
             ]
         )
