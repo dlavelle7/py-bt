@@ -1,0 +1,16 @@
+{
+  "title": "Behaviour Tree Model",
+  "type": "object",
+  "required": ["tasks_path", "tree"],
+  "additionalProperties": false,
+  "properties": {
+    "tasks_path": {
+      "type": "string",
+      "description": "Path to the python module containing your tasks (tests & actions)"
+    },
+    "tree": {
+      "type": "object",
+      "description": "The behaviour tree definition"
+    }
+  }
+}

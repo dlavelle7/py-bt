@@ -2,6 +2,7 @@ from setuptools import setup, find_packages
 
 deps = [
     "PyYAML==5.3",
+    "jsonschema==3.2.0",
 ]
 
 with open("README.md", "r") as fh:

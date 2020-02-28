@@ -1,6 +1,7 @@
 import os
 import json
 import importlib
+import jsonschema
 
 from yaml import load
 
@@ -15,11 +16,17 @@ DECORATOR_RETRY = "retry"
 RETRY_COUNT = "count"
 DEFAULT_RETRY_COUNT = 1
 
+# TODO: Parallel children? e.g. success if 3 / 5 children succeed
 # TODO: Subtrees
 # TODO: Validate tree in load() -> Use JSON Schema/Marshmallow -> Composites can only be sel/seq, Leafs can only be task
 # TODO: Restrict node blackboard access - within family?
 
-
+MODEL_SCHEMA_PATH = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "model_schema.json"
+    )
+)
 class BehaviourTree:
 
     def __init__(self, file_path):
@@ -39,6 +46,7 @@ class BehaviourTree:
             raise TypeError(
                 f"File type not supported for {os.path.basename(self.file_path)}. "
                 "Please use JSON or YAML formats.")
+        self._validate_model()
         self.tasks_path = self.model["tasks_path"]
         self.tasks_module = importlib.import_module(self.tasks_path)
 
@@ -49,6 +57,11 @@ class BehaviourTree:
     def _load_yaml(self):
         with open(self.file_path, "r") as yaml_file:
             self.model = load(yaml_file.read())
+
+    def _validate_model(self):
+        with open(MODEL_SCHEMA_PATH, "r") as json_file:
+            schema = json.loads(json_file.read())
+        jsonschema.validate(instance=self.model, schema=schema)
 
     def execute(self, data):
         self.execution_path = []
