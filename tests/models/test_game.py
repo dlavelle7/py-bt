@@ -20,6 +20,18 @@ class TestFootball(TestCase):
         self.btree = BehaviourTree(YAML_MODEL_PATH)
         self.btree.load()
 
-    def test_can_eat_after_retry(self):
-        # TODO:
-        pass
+    def test_can_eat_no_retry_needed(self):
+        character_data = {
+            "coordinates": (2, 2),
+            "food": ["apple", "orange"],
+        }
+        self.btree.execute(character_data)
+        self.assertListEqual(
+            self.btree.execution_path,
+            [
+                ("am_i_hungry", True),
+                ("have_i_food", True),
+                ("NOT", ("enemies_nearby", False), True),
+                ("eat", True)
+            ]
+        )
