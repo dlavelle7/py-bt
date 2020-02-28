@@ -75,6 +75,7 @@ class BehaviourTree:
         else:
             node_type, children = self._get_composite_node_type_and_children(node)
 
+        import ipdb; ipdb.set_trace();  # XXX Breakpoint
         for child in children:
             if node_type == DECORATOR_RETRY:
                 retry_count = node[DECORATOR_RETRY].get(RETRY_COUNT, DEFAULT_RETRY_COUNT) > 0

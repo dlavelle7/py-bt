@@ -1,9 +1,9 @@
 tasks_path: models.game.tasks
 tree:
   sequence:
-    - task: am_i_hungry
-    - task: have_i_food
-    - retry:
+  - task: am_i_hungry
+  - task: have_i_food
+  - retry:
       not:
-        task: enemies_nearby
-    - task: eat
+          task: enemies_nearby
+  - task: eat
