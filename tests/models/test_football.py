@@ -4,7 +4,7 @@ from unittest import TestCase
 
 from bt.behaviour_tree import BehaviourTree
 
-JSON_TREE_PATH = os.path.abspath(
+JSON_MODEL_PATH = os.path.abspath(
     os.path.join(
         os.path.dirname(__file__),
         os.pardir,
@@ -17,7 +17,7 @@ JSON_TREE_PATH = os.path.abspath(
 class TestFootball(TestCase):
 
     def setUp(self):
-        self.btree = BehaviourTree(JSON_TREE_PATH)
+        self.btree = BehaviourTree(JSON_MODEL_PATH)
         self.btree.load()
 
     def test_attacker_can_shoot(self):
