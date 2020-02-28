@@ -80,9 +80,9 @@ class BehaviourTree:
             if node_type == DECORATOR_RETRY:
                 retry_count = node[DECORATOR_RETRY].get(RETRY_COUNT, DEFAULT_RETRY_COUNT)
                 while retry_count > 0 and child_result is False:
+                    logger.info(f"Retrying decorator node: {retry_count} reties left.")
                     retry_count -= 1
                     child_result = self._execute_node(child, data)
-                    logger.info(f"Retrying decorator node: {retry_count} reties left.")
             elif node_type == DECORATOR_NOT:
                 self.execution_path[-1] = (DECORATOR_NOT.upper(), self.execution_path[-1], not child_result)
                 child_result = not child_result
