@@ -6,7 +6,16 @@
       "required": ["sequence"],
       "properties": {
         "sequence": {
-          "type": "array"
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {"$ref": "#/definitions/sequenceComposite"},
+              {"$ref": "#/definitions/selectorComposite"},
+              {"$ref": "#/definitions/taskLeaf"},
+              {"$ref": "#/definitions/notDecorator"},
+              {"$ref": "#/definitions/retryDecorator"}
+            ]
+          }
         }
       }
     },
@@ -16,7 +25,39 @@
       "required": ["selector"],
       "properties": {
         "selector": {
-          "type": "array"
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {"$ref": "#/definitions/sequenceComposite"},
+              {"$ref": "#/definitions/selectorComposite"},
+              {"$ref": "#/definitions/taskLeaf"},
+              {"$ref": "#/definitions/notDecorator"},
+              {"$ref": "#/definitions/retryDecorator"}
+            ]
+          }
+        }
+      }
+    },
+    "taskLeaf": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task"],
+      "properties": {
+        "task": {"type": "string"}
+      }
+    },
+    "notDecorator": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["not"]
+    },
+    "retryDecorator": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["retry"],
+      "properties": {
+        "count": {
+          "type": "integer"
         }
       }
     }
