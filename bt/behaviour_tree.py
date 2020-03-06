@@ -47,6 +47,7 @@ class BehaviourTree:
                 f"File type not supported for {os.path.basename(self.file_path)}. "
                 "Please use JSON or YAML formats.")
         self._validate_model()
+        logger.info("Model validated successfully.")
         self.tasks_path = self.model["tasks_path"]
         self.tasks_module = importlib.import_module(self.tasks_path)
 
@@ -66,8 +67,9 @@ class BehaviourTree:
     def execute(self, data):
         self.execution_path = []
         self.blackboard = {}
-        logger.info("\nExecuting new flow")
+        logger.info("Executing behaviour tree")
         self._execute_node(self.model[TREE], data)
+        logger.info("Finished executing behaviour tree")
 
     def _get_composite_node_type_and_children(self, node):
         if node.get(SEQUENCE) is not None:

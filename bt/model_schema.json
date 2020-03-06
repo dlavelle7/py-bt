@@ -75,7 +75,10 @@
     "tree": {
       "anyOf": [
           {"$ref": "#/definitions/sequenceComposite"},
-          {"$ref": "#/definitions/selectorComposite"}
+          {"$ref": "#/definitions/selectorComposite"},
+          {"$ref": "#/definitions/taskLeaf"},
+          {"$ref": "#/definitions/notDecorator"},
+          {"$ref": "#/definitions/retryDecorator"}
       ]
     }
   }
