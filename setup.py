@@ -12,6 +12,7 @@ setup(
     name="py-bt",
     version="1.2.0",
     author="David Lavelle",
+    author_email="davidlavelle1@hotmail.com",
     description="Python package for modelling and executing Behaviour Trees.",
     long_description=long_description,
     long_description_content_type="text/markdown",
