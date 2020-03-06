@@ -1,4 +1,27 @@
 {
+  "definitions": {
+    "sequenceComposite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sequence"],
+      "properties": {
+        "sequence": {
+          "type": "array"
+        }
+      }
+    },
+    "selectorComposite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selector"],
+      "properties": {
+        "selector": {
+          "type": "array"
+        }
+      }
+    }
+  },
+
   "title": "Behaviour Tree Model",
   "type": "object",
   "required": ["tasks_path", "tree"],
@@ -9,8 +32,10 @@
       "description": "Path to the python module containing your tasks (tests & actions)"
     },
     "tree": {
-      "type": "object",
-      "description": "The behaviour tree definition"
+      "anyOf": [
+          {"$ref": "#/definitions/sequenceComposite"},
+          {"$ref": "#/definitions/selectorComposite"}
+      ]
     }
   }
 }
