@@ -10,7 +10,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="py-bt",
-    version="1.2.0",
+    version="1.2.1",
     author="David Lavelle",
     author_email="davidlavelle1@hotmail.com",
     description="Python package for modelling and executing Behaviour Trees.",
