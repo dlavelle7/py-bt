@@ -22,4 +22,3 @@ class TestValidation(TestCase):
         mock_load_json.return_value = invalid_data
         bt = BehaviourTree("foobar.json")
         self.assertRaises(ValidationError, bt.load)
-        mock_import.assert_called_once_with("foo.bar")

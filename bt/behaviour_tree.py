@@ -16,6 +16,8 @@ DECORATOR_RETRY = "retry"
 RETRY_COUNT = "count"
 DEFAULT_RETRY_COUNT = 1
 
+# TODO: refactor json schema (reuse "nodes")
+# TODO: XML support
 # TODO: Parallel children? e.g. success if 3 / 5 children succeed
 # TODO: Subtrees
 # TODO: Restrict node blackboard access - within family?

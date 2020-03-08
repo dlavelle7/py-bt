@@ -49,7 +49,18 @@
     "notDecorator": {
       "type": "object",
       "additionalProperties": true,
-      "required": ["not"]
+      "required": ["not"],
+      "properties": {
+          "not": {
+            "anyOf": [
+                {"$ref": "#/definitions/sequenceComposite"},
+                {"$ref": "#/definitions/selectorComposite"},
+                {"$ref": "#/definitions/taskLeaf"},
+                {"$ref": "#/definitions/notDecorator"},
+                {"$ref": "#/definitions/retryDecorator"}
+            ]
+          }
+      }
     },
     "retryDecorator": {
       "type": "object",
@@ -58,6 +69,15 @@
       "properties": {
         "count": {
           "type": "integer"
+        },
+        "retry": {
+          "anyOf": [
+              {"$ref": "#/definitions/sequenceComposite"},
+              {"$ref": "#/definitions/selectorComposite"},
+              {"$ref": "#/definitions/taskLeaf"},
+              {"$ref": "#/definitions/notDecorator"},
+              {"$ref": "#/definitions/retryDecorator"}
+          ]
         }
       }
     }
