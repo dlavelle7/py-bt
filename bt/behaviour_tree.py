@@ -1,9 +1,8 @@
 import os
 import json
+import yaml
 import importlib
 import jsonschema
-
-from yaml import load
 
 from bt.logger import logger
 
@@ -60,7 +59,7 @@ class BehaviourTree:
 
     def _load_yaml(self):
         with open(self.file_path, "r") as yaml_file:
-            return load(yaml_file.read())
+            return yaml.safe_load(yaml_file.read())
 
     def _validate_model(self):
         with open(MODEL_SCHEMA_PATH, "r") as json_file:
