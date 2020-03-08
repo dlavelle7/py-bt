@@ -51,15 +51,15 @@
       "additionalProperties": true,
       "required": ["not"],
       "properties": {
-          "not": {
-            "anyOf": [
-                {"$ref": "#/definitions/sequenceComposite"},
-                {"$ref": "#/definitions/selectorComposite"},
-                {"$ref": "#/definitions/taskLeaf"},
-                {"$ref": "#/definitions/notDecorator"},
-                {"$ref": "#/definitions/retryDecorator"}
-            ]
-          }
+        "not": {
+          "anyOf": [
+            {"$ref": "#/definitions/sequenceComposite"},
+            {"$ref": "#/definitions/selectorComposite"},
+            {"$ref": "#/definitions/taskLeaf"},
+            {"$ref": "#/definitions/notDecorator"},
+            {"$ref": "#/definitions/retryDecorator"}
+          ]
+        }
       }
     },
     "retryDecorator": {
@@ -72,11 +72,11 @@
         },
         "retry": {
           "anyOf": [
-              {"$ref": "#/definitions/sequenceComposite"},
-              {"$ref": "#/definitions/selectorComposite"},
-              {"$ref": "#/definitions/taskLeaf"},
-              {"$ref": "#/definitions/notDecorator"},
-              {"$ref": "#/definitions/retryDecorator"}
+            {"$ref": "#/definitions/sequenceComposite"},
+            {"$ref": "#/definitions/selectorComposite"},
+            {"$ref": "#/definitions/taskLeaf"},
+            {"$ref": "#/definitions/notDecorator"},
+            {"$ref": "#/definitions/retryDecorator"}
           ]
         }
       }
@@ -94,11 +94,11 @@
     },
     "tree": {
       "anyOf": [
-          {"$ref": "#/definitions/sequenceComposite"},
-          {"$ref": "#/definitions/selectorComposite"},
-          {"$ref": "#/definitions/taskLeaf"},
-          {"$ref": "#/definitions/notDecorator"},
-          {"$ref": "#/definitions/retryDecorator"}
+        {"$ref": "#/definitions/sequenceComposite"},
+        {"$ref": "#/definitions/selectorComposite"},
+        {"$ref": "#/definitions/taskLeaf"},
+        {"$ref": "#/definitions/notDecorator"},
+        {"$ref": "#/definitions/retryDecorator"}
       ]
     }
   }
