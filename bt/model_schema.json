@@ -1,0 +1,105 @@
+{
+  "definitions": {
+    "sequenceComposite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sequence"],
+      "properties": {
+        "sequence": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {"$ref": "#/definitions/sequenceComposite"},
+              {"$ref": "#/definitions/selectorComposite"},
+              {"$ref": "#/definitions/taskLeaf"},
+              {"$ref": "#/definitions/notDecorator"},
+              {"$ref": "#/definitions/retryDecorator"}
+            ]
+          }
+        }
+      }
+    },
+    "selectorComposite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selector"],
+      "properties": {
+        "selector": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {"$ref": "#/definitions/sequenceComposite"},
+              {"$ref": "#/definitions/selectorComposite"},
+              {"$ref": "#/definitions/taskLeaf"},
+              {"$ref": "#/definitions/notDecorator"},
+              {"$ref": "#/definitions/retryDecorator"}
+            ]
+          }
+        }
+      }
+    },
+    "taskLeaf": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task"],
+      "properties": {
+        "task": {"type": "string"}
+      }
+    },
+    "notDecorator": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["not"],
+      "properties": {
+        "not": {
+          "anyOf": [
+            {"$ref": "#/definitions/sequenceComposite"},
+            {"$ref": "#/definitions/selectorComposite"},
+            {"$ref": "#/definitions/taskLeaf"},
+            {"$ref": "#/definitions/notDecorator"},
+            {"$ref": "#/definitions/retryDecorator"}
+          ]
+        }
+      }
+    },
+    "retryDecorator": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["retry"],
+      "properties": {
+        "count": {
+          "type": "integer"
+        },
+        "retry": {
+          "anyOf": [
+            {"$ref": "#/definitions/sequenceComposite"},
+            {"$ref": "#/definitions/selectorComposite"},
+            {"$ref": "#/definitions/taskLeaf"},
+            {"$ref": "#/definitions/notDecorator"},
+            {"$ref": "#/definitions/retryDecorator"}
+          ]
+        }
+      }
+    }
+  },
+
+  "title": "Behaviour Tree Model",
+  "type": "object",
+  "required": ["tasks_path", "tree"],
+  "additionalProperties": false,
+  "properties": {
+    "tasks_path": {
+      "type": "string",
+      "description": "Path to the python module containing your tasks (tests & actions)"
+    },
+    "tree": {
+      "anyOf": [
+        {"$ref": "#/definitions/sequenceComposite"},
+        {"$ref": "#/definitions/selectorComposite"},
+        {"$ref": "#/definitions/taskLeaf"},
+        {"$ref": "#/definitions/notDecorator"},
+        {"$ref": "#/definitions/retryDecorator"}
+      ]
+    }
+  }
+}

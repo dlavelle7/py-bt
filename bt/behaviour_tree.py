@@ -1,8 +1,8 @@
 import os
 import json
+import yaml
 import importlib
-
-from yaml import load
+import jsonschema
 
 from bt.logger import logger
 
@@ -15,9 +15,16 @@ DECORATOR_RETRY = "retry"
 RETRY_COUNT = "count"
 DEFAULT_RETRY_COUNT = 1
 
+# TODO: Parallel children? e.g. success if 3 / 5 children succeed
 # TODO: Subtrees
-# TODO: Validate tree in load() -> Use JSON Schema/Marshmallow -> Composites can only be sel/seq, Leafs can only be task
 # TODO: Restrict node blackboard access - within family?
+
+MODEL_SCHEMA_PATH = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "model_schema.json"
+    )
+)
 
 
 class BehaviourTree:
@@ -32,29 +39,37 @@ class BehaviourTree:
 
     def load(self):
         if self.file_path.endswith(".json"):
-            self._load_json()
+            self.model = self._load_json()
         elif self.file_path.endswith(".yaml") or self.file_path.endswith(".yml"):
-            self._load_yaml()
+            self.model = self._load_yaml()
         else:
             raise TypeError(
                 f"File type not supported for {os.path.basename(self.file_path)}. "
                 "Please use JSON or YAML formats.")
+        self._validate_model()
+        logger.info("Model validated successfully.")
         self.tasks_path = self.model["tasks_path"]
         self.tasks_module = importlib.import_module(self.tasks_path)
 
     def _load_json(self):
         with open(self.file_path, "r") as json_file:
-            self.model = json.loads(json_file.read())
+            return json.loads(json_file.read())
 
     def _load_yaml(self):
         with open(self.file_path, "r") as yaml_file:
-            self.model = load(yaml_file.read())
+            return yaml.safe_load(yaml_file.read())
+
+    def _validate_model(self):
+        with open(MODEL_SCHEMA_PATH, "r") as json_file:
+            schema = json.loads(json_file.read())
+        jsonschema.validate(instance=self.model, schema=schema)
 
     def execute(self, data):
         self.execution_path = []
         self.blackboard = {}
-        logger.info("\nExecuting new flow")
+        logger.info("Executing behaviour tree")
         self._execute_node(self.model[TREE], data)
+        logger.info("Finished executing behaviour tree")
 
     def _get_composite_node_type_and_children(self, node):
         if node.get(SEQUENCE) is not None:

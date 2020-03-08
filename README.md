@@ -18,6 +18,8 @@ Selector nodes return the first successful child node. Similar to the OR operato
 
 ## Release History
 
+* 1.2.1: Added tree model validation
+
 * 1.2.0: Added the "retry" decorator node
 
 * 1.1.0: Added the "not" decorator node (inverter)
